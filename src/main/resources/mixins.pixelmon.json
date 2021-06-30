@@ -9,7 +9,8 @@
     "MixinStatusBase",
     "MixinRegenerator",
     "MixinPoison",
-    "MixinLeftovers"
+    "MixinLeftovers",
+    "MixinExtraStats"
   ],
   "client": []
 }
