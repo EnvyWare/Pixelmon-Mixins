@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.7.10",
+  "package": "com.envyful.mixins.reforged",
+  "refmap": "mixins.pixelmon.refmap.json",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinStatusBase"
+  ],
+  "client": []
+}

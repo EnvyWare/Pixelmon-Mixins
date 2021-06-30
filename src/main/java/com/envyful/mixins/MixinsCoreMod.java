@@ -5,6 +5,7 @@ import net.minecraftforge.fml.relauncher.CoreModManager;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.apache.commons.io.FileUtils;
 import org.spongepowered.asm.launch.MixinBootstrap;
+import org.spongepowered.asm.mixin.Mixins;
 
 import javax.annotation.Nullable;
 import java.io.File;
@@ -25,7 +26,7 @@ public class MixinsCoreMod implements IFMLLoadingPlugin {
     public MixinsCoreMod() {
         this.findAndLoadPixelmon();
         MixinBootstrap.init();
-        //TODO: mixin configs here
+        Mixins.addConfiguration("mixins.pixelmon.json");
     }
 
     public void findAndLoadPixelmon() {
