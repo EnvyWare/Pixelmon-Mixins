@@ -10,7 +10,8 @@
     "MixinRegenerator",
     "MixinPoison",
     "MixinLeftovers",
-    "MixinExtraStats"
+    "MixinExtraStats",
+    "MixinMagicCoat"
   ],
   "client": []
 }
