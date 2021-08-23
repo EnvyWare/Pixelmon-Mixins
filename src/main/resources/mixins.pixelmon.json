@@ -11,7 +11,8 @@
     "MixinPoison",
     "MixinLeftovers",
     "MixinExtraStats",
-    "MixinMagicCoat"
+    "MixinMagicCoat",
+    "MixinEntity4Interactions"
   ],
   "client": []
 }
