@@ -50,6 +50,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'org.spongepowered:mixin:0.8.1-SNAPSHOT'
     implementation fg.deobf('com.pixelmonmod.pixelmon:Pixelmon-1.12.2-8.2.0-server:0.0.1')
+    implementation fg.deobf('com.xpgaming.pixelhunt:PixelHuntForge-1.12.2-2.0.2:0.0.1')
 
     annotationProcessor 'org.spongepowered:mixin:0.8.3-SNAPSHOT:processor'
 }

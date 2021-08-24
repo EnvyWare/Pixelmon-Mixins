@@ -1,5 +1,7 @@
 package com.envyful.mixins;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import net.minecraft.launchwrapper.LaunchClassLoader;
 import net.minecraftforge.fml.relauncher.CoreModManager;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
@@ -12,7 +14,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -24,45 +28,52 @@ public class MixinsCoreMod implements IFMLLoadingPlugin {
     private static final File MODS_FOLDER = new File(System.getProperty("user.dir"), "mods");
 
     public MixinsCoreMod() {
-        this.findAndLoadPixelmon();
+        this.findAndLoadMods();
         MixinBootstrap.init();
         Mixins.addConfiguration("mixins.pixelmon.json");
+        Mixins.addConfiguration("mixins.pixelhunt.json");
     }
 
-    public void findAndLoadPixelmon() {
+    public void findAndLoadMods() {
         if (!MODS_FOLDER.exists()) {
             return;
         }
 
-        File pixelmon = this.findPixelmonFile();
-
-        if (pixelmon == null) {
-            return;
-        }
-
-        this.attemptLoadPixelmon(pixelmon);
+        this.findAndLoadJarFiles(
+                "com/pixelmonmod/pixelmon/Pixelmon.class",
+                "com/xpgaming/pixelhunt/PixelHuntForge.class"
+        );
     }
 
-    private File findPixelmonFile() {
+    private void findAndLoadJarFiles(String... classNames) {
         Collection<File> jars = FileUtils.listFiles(MODS_FOLDER, ACCEPTED_TYPES, false);
+        Set<String> classNameSet = Sets.newHashSet(classNames);
+        List<File> toLoad = Lists.newArrayList();
 
         for (File jar : jars) {
-            if (this.searchForPixelmonPackage(jar)) {
-                return jar;
+            if (this.searchForClasses(jar, classNameSet)) {
+                toLoad.add(jar);
             }
         }
 
-        return null;
+        for (File jar : toLoad) {
+            if (jar == null) {
+                continue;
+            }
+
+            this.attemptLoadMod(jar);
+        }
     }
 
-    private boolean searchForPixelmonPackage(File file) {
+    private boolean searchForClasses(File file, Set<String> classNames) {
         try {
             ZipInputStream zip = new ZipInputStream(new FileInputStream(file));
             ZipEntry entry;
 
             while ((entry = zip.getNextEntry()) != null) {
                 zip.closeEntry();
-                if (entry.getName().equals("com/pixelmonmod/pixelmon/Pixelmon.class")) {
+
+                if (classNames.contains(entry.getName())) {
                     return true;
                 }
             }
@@ -75,14 +86,14 @@ public class MixinsCoreMod implements IFMLLoadingPlugin {
         return false;
     }
 
-    private void attemptLoadPixelmon(File pixelmon) {
-        if (CoreModManager.getReparseableCoremods().contains(pixelmon.getName())) {
+    private void attemptLoadMod(File jar) {
+        if (CoreModManager.getReparseableCoremods().contains(jar.getName())) {
             return;
         }
 
         try {
-            ((LaunchClassLoader) this.getClass().getClassLoader()).addURL(pixelmon.toURI().toURL());
-            CoreModManager.getReparseableCoremods().add(pixelmon.getName());
+            ((LaunchClassLoader) this.getClass().getClassLoader()).addURL(jar.toURI().toURL());
+            CoreModManager.getReparseableCoremods().add(jar.getName());
         } catch (IOException e) {
             e.printStackTrace();
         }
