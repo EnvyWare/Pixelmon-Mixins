@@ -41,6 +41,7 @@ public class MixinsCoreMod implements IFMLLoadingPlugin {
 
         this.findAndLoadJarFiles(
                 "com/pixelmonmod/pixelmon/Pixelmon.class",
+                "ca/landonjw/gooeylibs2/api/button/GooeyButton.class",
                 "com/xpgaming/pixelhunt/PixelHuntForge.class"
         );
     }

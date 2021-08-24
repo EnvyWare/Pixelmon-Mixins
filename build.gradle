@@ -51,6 +51,7 @@ dependencies {
     implementation 'org.spongepowered:mixin:0.8.1-SNAPSHOT'
     implementation fg.deobf('com.pixelmonmod.pixelmon:Pixelmon-1.12.2-8.2.0-server:0.0.1')
     implementation fg.deobf('com.xpgaming.pixelhunt:PixelHuntForge-1.12.2-2.0.2:0.0.1')
+    implementation fg.deobf('com.gooeylibs:GooeyLibs-2.1.1-fix:0.0.1')
 
     annotationProcessor 'org.spongepowered:mixin:0.8.3-SNAPSHOT:processor'
 }
