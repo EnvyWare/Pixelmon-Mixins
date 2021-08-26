@@ -12,7 +12,11 @@
     "MixinLeftovers",
     "MixinExtraStats",
     "MixinMagicCoat",
-    "MixinEntity4Interactions"
+    "MixinEntity4Interactions",
+    "MixinEnumSpecies",
+    "MixinPokemon",
+    "MixinCaptureBeastBall",
+    "MixinLegendaryCaptureTriggerInstance"
   ],
   "client": []
 }

@@ -3,6 +3,7 @@ package com.envyful.mixins.reforged;
 import com.pixelmonmod.pixelmon.entities.pixelmon.Entity3HasStats;
 import com.pixelmonmod.pixelmon.entities.pixelmon.Entity4Interactions;
 import com.pixelmonmod.pixelmon.entities.pixelmon.PathNavigateGroundLarge;
+import com.pixelmonmod.pixelmon.enums.EnumSpecies;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,7 +28,7 @@ public abstract class MixinEntity4Interactions extends Entity3HasStats {
             System.out.println("AVG " + this.getEntityBoundingBox().getAverageEdgeLength());
         }*/
 
-        if (this.getEntityBoundingBox().getAverageEdgeLength() > 5) {
+        if (this.getEntityBoundingBox().getAverageEdgeLength() > 4) {
             if (!(this.navigator instanceof PathNavigateGroundLarge)) {
                 this.navigator = new PathNavigateGroundLarge(
                         (EntityLiving) this.getEntityWorld().getEntityByID(this.getEntityId()), this.getEntityWorld());
