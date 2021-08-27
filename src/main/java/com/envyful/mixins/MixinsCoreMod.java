@@ -31,6 +31,7 @@ public class MixinsCoreMod implements IFMLLoadingPlugin {
         this.findAndLoadMods();
         MixinBootstrap.init();
         Mixins.addConfiguration("mixins.pixelmon.json");
+        Mixins.addConfiguration("mixins.minecraft.json");
         /*Mixins.addConfiguration("mixins.pixelhunt.json");*/
     }
 
