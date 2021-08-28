@@ -6,17 +6,19 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MixinStatusBase",
-    "MixinRegenerator",
-    "MixinPoison",
-    "MixinLeftovers",
-    "MixinExtraStats",
-    "MixinMagicCoat",
+    "MixinCaptureBeastBall",
+    "MixinEntity1Base",
     "MixinEntity4Interactions",
     "MixinEnumSpecies",
+    "MixinExtraStats",
+    "MixinLeftovers",
+    "MixinLegendaryCaptureTriggerInstance",
+    "MixinMagicCoat",
+    "MixinPartyStorage",
+    "MixinPoison",
     "MixinPokemon",
-    "MixinCaptureBeastBall",
-    "MixinLegendaryCaptureTriggerInstance"
+    "MixinRegenerator",
+    "MixinStatusBase"
   ],
   "client": []
 }

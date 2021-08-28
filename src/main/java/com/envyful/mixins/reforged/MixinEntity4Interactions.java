@@ -3,12 +3,12 @@ package com.envyful.mixins.reforged;
 import com.pixelmonmod.pixelmon.entities.pixelmon.Entity3HasStats;
 import com.pixelmonmod.pixelmon.entities.pixelmon.Entity4Interactions;
 import com.pixelmonmod.pixelmon.entities.pixelmon.PathNavigateGroundLarge;
-import com.pixelmonmod.pixelmon.enums.EnumSpecies;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Entity4Interactions.class)
 public abstract class MixinEntity4Interactions extends Entity3HasStats {
@@ -19,40 +19,10 @@ public abstract class MixinEntity4Interactions extends Entity3HasStats {
 
     @Shadow(remap = false) protected abstract boolean isFlying();
 
-    /**
-     * @author
-     */
-    @Overwrite(remap = false)
-    protected void updateEntityActionStateAlt() {
-/*        if (this.getBaseStats().getSpecies() == EnumSpecies.Groudon && this.getEntityBoundingBox() != null) {
-            System.out.println("AVG " + this.getEntityBoundingBox().getAverageEdgeLength());
-        }*/
-
-        if (this.getEntityBoundingBox().getAverageEdgeLength() > 4) {
-            if (!(this.navigator instanceof PathNavigateGroundLarge)) {
-                this.navigator = new PathNavigateGroundLarge(
-                        (EntityLiving) this.getEntityWorld().getEntityByID(this.getEntityId()), this.getEntityWorld());
-            }
+    @Inject(method = "resetAI", at = @At("RETURN"), remap = false)
+    public void onResetAI(CallbackInfo ci) {
+        if (this.getPokemonData().getGrowth().scaleOrdinal > 5) {
+            this.navigator = new PathNavigateGroundLarge(this, this.world);
         }
-
-        ++this.idleTime;
-        this.despawnEntity();
-        this.getEntitySenses().clearSensingCache();
-        this.targetTasks.onUpdateTasks();
-        this.tasks.onUpdateTasks();
-        this.navigator.onUpdateNavigation();
-        this.updateAITasks();
-        if (this.isRiding() && this.getRidingEntity() instanceof EntityLiving) {
-            EntityLiving entityliving = (EntityLiving)this.getRidingEntity();
-            entityliving.getNavigator().setPath(this.getNavigator().getPath(), 1.5D);
-            entityliving.getMoveHelper().read(this.getMoveHelper());
-        }
-
-        this.moveHelper.onUpdateMoveHelper();
-        if (!this.isFlying()) {
-            this.getLookHelper().onUpdateLook();
-            this.jumpHelper.doJump();
-        }
-
     }
 }

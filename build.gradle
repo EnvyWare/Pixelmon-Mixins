@@ -60,8 +60,14 @@ mixin {
     defaultObfuscationEnv "notch"
 }
 
+sourceSets {
+    main {
+        ext.refMap = "mixins.pixelmon.refmap.json"
+    }
+}
+
 mixin {
-    add sourceSets.main, "mixin.minecraft.refmap.json"
+    add sourceSets.main, "mixins.pixelmon.refmap.json"
 }
 
 jar {
