@@ -32,6 +32,7 @@ public abstract class MixinPartyStorage extends PokemonStorage {
     public void onGetTeamHead(CallbackInfoReturnable<List<Pokemon>> callbackInfoReturnable) {
         if (!this.getShouldSave()) {
             callbackInfoReturnable.setReturnValue(this.partyAsList);
+            callbackInfoReturnable.cancel();
         }
     }
 
