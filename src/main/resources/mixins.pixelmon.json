@@ -9,6 +9,7 @@
     "MixinCaptureBeastBall",
     "MixinEntity1Base",
     "MixinEntity4Interactions",
+    "MixinEntity6Moves",
     "MixinEnumSpecies",
     "MixinExtraStats",
     "MixinLeftovers",
