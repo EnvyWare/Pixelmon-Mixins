@@ -10,6 +10,7 @@
     "MixinEntity1Base",
     "MixinEntity4Interactions",
     "MixinEntity6Moves",
+    "MixinEntityStatue",
     "MixinEnumSpecies",
     "MixinExtraStats",
     "MixinLeftovers",
