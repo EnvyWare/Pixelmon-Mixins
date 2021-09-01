@@ -22,7 +22,8 @@
     "MixinPokemon",
     "MixinPokemonBase",
     "MixinRegenerator",
-    "MixinStatusBase"
+    "MixinStatusBase",
+    "MixinTileEntityBerryTree"
   ],
   "client": []
 }
