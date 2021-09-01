@@ -2,6 +2,7 @@ package com.envyful.mixins.reforged;
 
 import com.pixelmonmod.pixelmon.quests.QuestProgress;
 import com.pixelmonmod.pixelmon.quests.exceptions.InvalidQuestArgsException;
+import com.pixelmonmod.pixelmon.quests.objectives.IObjective;
 import com.pixelmonmod.pixelmon.quests.objectives.Objective;
 import com.pixelmonmod.pixelmon.quests.objectives.objectives.meta.DateObjective;
 import com.pixelmonmod.pixelmon.quests.quest.Stage;
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 @Mixin(DateObjective.class)
-public class MixinDateObjective {
+public abstract class MixinDateObjective implements IObjective {
 
     private static ZoneId zone = ZoneId.systemDefault();
 
