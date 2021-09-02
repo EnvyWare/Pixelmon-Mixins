@@ -4,7 +4,6 @@ import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
 import com.pixelmonmod.pixelmon.entities.pokeballs.EnumPokeBallMode;
 import com.pixelmonmod.pixelmon.entities.pokeballs.captures.CaptureBase;
 import com.pixelmonmod.pixelmon.entities.pokeballs.captures.CaptureBeastBall;
-import com.pixelmonmod.pixelmon.enums.EnumSpecies;
 import com.pixelmonmod.pixelmon.enums.forms.EnumSpecial;
 import com.pixelmonmod.pixelmon.enums.items.EnumPokeballs;
 import net.minecraft.entity.player.EntityPlayer;

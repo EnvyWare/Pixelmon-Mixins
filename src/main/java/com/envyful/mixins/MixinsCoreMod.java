@@ -1,8 +1,8 @@
 package com.envyful.mixins;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import net.minecraft.launchwrapper.LaunchClassLoader;
+import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.relauncher.CoreModManager;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.apache.commons.io.FileUtils;
@@ -12,93 +12,123 @@ import org.spongepowered.asm.mixin.Mixins;
 import javax.annotation.Nullable;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 @IFMLLoadingPlugin.MCVersion("1.12.2")
-@IFMLLoadingPlugin.DependsOn("pixelmon")
 public class MixinsCoreMod implements IFMLLoadingPlugin {
 
-    private static final String[] ACCEPTED_TYPES = new String[] { "jar", "zip" };
-    private static final File MODS_FOLDER = new File(System.getProperty("user.dir"), "mods");
+    private static final String[] ALLOWED_TYPES = {
+            "jar",
+            "zip"
+    };
 
-    public MixinsCoreMod() {
-        this.findAndLoadMods();
-        MixinBootstrap.init();
-        Mixins.addConfiguration("mixins.pixelmon.json");
-        Mixins.addConfiguration("mixins.minecraft.json");
-        /*Mixins.addConfiguration("mixins.pixelhunt.json");*/
-    }
+    private final List<Tuple<String, String>> coremods = Lists.newArrayList();
+    private final List<Tuple<String, String>> loadedCoremods = Lists.newArrayList();
 
-    public void findAndLoadMods() {
-        if (!MODS_FOLDER.exists()) {
-            return;
-        }
-
-        this.findAndLoadJarFiles(
-                "com/pixelmonmod/pixelmon/Pixelmon.class",
-                "ca/landonjw/gooeylibs2/api/button/GooeyButton.class",
-                "com/xpgaming/pixelhunt/PixelHuntForge.class"
-        );
-    }
-
-    private void findAndLoadJarFiles(String... classNames) {
-        Collection<File> jars = FileUtils.listFiles(MODS_FOLDER, ACCEPTED_TYPES, false);
-        Set<String> classNameSet = Sets.newHashSet(classNames);
-        List<File> toLoad = Lists.newArrayList();
-
-        for (File jar : jars) {
-            if (this.searchForClasses(jar, classNameSet)) {
-                toLoad.add(jar);
-            }
-        }
-
-        for (File jar : toLoad) {
-            if (jar == null) {
-                continue;
-            }
-
-            this.attemptLoadMod(jar);
+    private void addToCoremodList(String mod, String mixin) {
+        if (mod == null || mod.trim().isEmpty() || mixin == null || mixin.trim().isEmpty()) {
+            this.log("Mixins", "Loaded a null mod or mixins (mod=" + mod + ", mixin=" + mixin + ") this is not valid and will be dumped!");
+        } else {
+            this.log("Mixins", "Added Optional Preloader for \"" + mod + "\" using \"" + mixin + "\"");
+            this.coremods.add(new Tuple<>(mod, mixin));
         }
     }
 
-    private boolean searchForClasses(File file, Set<String> classNames) {
+    private boolean loadCoremod(File coremod, Tuple<String, String> target) {
         try {
-            ZipInputStream zip = new ZipInputStream(new FileInputStream(file));
-            ZipEntry entry;
+            if (!CoreModManager.getReparseableCoremods().contains(coremod.getName())) {
+                ((LaunchClassLoader) getClass().getClassLoader()).addURL(coremod.toURI().toURL());
+                CoreModManager.getReparseableCoremods().add(coremod.getName());
+                log("Mixins", "Preloaded mod \"" + coremod.getName() + "\" containing \"" + target.getFirst() + "\"");
+                return true;
+            } else {
+                log("Mixins", "Skipped Preloading already loaded coremod \"" + coremod.getName() + "\" with \"" + target.getSecond() + "\"");
+                return false;
+            }
+        } catch (Throwable t) {
+            log("Mixins", "Failed to  load a coremod! Caught " + t.getClass().getSimpleName() + "!" + " caused by " + (target == null ? "target was null" : target.getFirst() + " - " + target.getSecond()), t);
+            return false;
+        }
 
-            while ((entry = zip.getNextEntry()) != null) {
-                zip.closeEntry();
+    }
 
-                if (classNames.contains(entry.getName())) {
-                    return true;
+    private void loadCoremodList() {
+        loadFolder("mods");
+        initializeMixins();
+    }
+
+    private void initializeMixins() {
+        loadedCoremods.add(new Tuple<>("internal", "mixins.minecraft.json"));
+
+        log("Mixins", "Loading Sponge mixins");
+        Mixins.addConfiguration("mixins.sponge.json");
+
+        try {
+            MixinBootstrap.init();
+            for (final Tuple<String, String> tuple : new ArrayList<>(loadedCoremods)) {
+                try {
+                    log("Mixins", "Loading Coremod mixins \"" + tuple.getSecond() + "\"");
+                    Mixins.addConfiguration(tuple.getSecond());
+                } catch (Throwable t) {
+                    log("Mixins", "Caught Exception trying to preload mod configurations for \"" + (tuple != null ? tuple.getSecond() : "null entry") + "\"", t);
                 }
             }
-
-            zip.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (final Throwable t) {
+            log("Mixins", "Caught Exception trying to preload mod configurations", t);
         }
-
-        return false;
     }
 
-    private void attemptLoadMod(File jar) {
-        if (CoreModManager.getReparseableCoremods().contains(jar.getName())) {
-            return;
-        }
-
+    private void loadFolder(String path) {
         try {
-            ((LaunchClassLoader) this.getClass().getClassLoader()).addURL(jar.toURI().toURL());
-            CoreModManager.getReparseableCoremods().add(jar.getName());
-        } catch (IOException e) {
-            e.printStackTrace();
+            final File modsFolder = new File(System.getProperty("user.dir"), path);
+            if (!modsFolder.exists()) {
+                log("Mixins", "The \"" + path + "\" folder couldn't be found skipping this loader! Folder: " + modsFolder.toString());
+                return;
+            }
+
+            Collection<File> jars = FileUtils.listFiles(modsFolder, ALLOWED_TYPES, false);
+
+            for (final File jar : jars) {
+                final ZipInputStream zip = new ZipInputStream(new FileInputStream(jar));
+                ZipEntry entry;
+                while ((entry = zip.getNextEntry()) != null) {
+                    zip.closeEntry();
+                    String name = entry.getName();
+                    for (Tuple<String, String> tuple : new ArrayList<>(coremods)) {
+                        if (name.equals(tuple.getFirst())) {
+                            loadCoremod(jar, tuple);
+                            loadedCoremods.add(tuple);
+                            coremods.remove(tuple);
+                        }
+                    }
+                }
+                zip.close();
+            }
+
+        } catch (Throwable t) {
+            log("Mixins", "Caught Exception trying to load \"" + path + "\" for coremods! This will likely be fatal", t);
         }
+    }
+
+    public MixinsCoreMod() {
+        addToCoremodList("com/pixelmonmod/pixelmon/api/pokemon/Pokemon.class", "mixins.pixelmon.json");
+        addToCoremodList("me/rojo8399/placeholderapi/impl/PlaceholderAPIPlugin.class", "mixins.placeholderapi.json");
+        addToCoremodList("io/github/theknightkarim/oremoney/OreMoney.class", "mixins.oremoney.json");
+        addToCoremodList("uk/co/proxying/tabmanager/TabManager.class", "mixins.tabmanager.json");
+        addToCoremodList("me/ryanhamshire/griefprevention/GriefPrevention.class", "mixins.griefprevention.json");
+        addToCoremodList("com/pixelextras/PixelExtras.class", "mixins.pixelextras.json");
+        addToCoremodList("de/waterdude/uishop/UIShop.class", "mixins.uishop.json");
+        addToCoremodList("de/waterdude/aquaapi/AquaAPI.class", "mixins.aquaapi.json");
+        addToCoremodList("de/waterdude/dailies/Dailies.class", "mixins.dailies.json");
+        addToCoremodList("io/github/nucleuspowered/nucleus/Nucleus.class", "mixins.nucleus.json");
+        addToCoremodList("com/karanumcoding/adamantineshieldreforged/AdamantineShieldReforged.class", "mixins.adamantine.json");
+
+        loadCoremodList();
     }
 
     @Override
@@ -119,11 +149,52 @@ public class MixinsCoreMod implements IFMLLoadingPlugin {
 
     @Override
     public void injectData(Map<String, Object> data) {
-
     }
 
     @Override
     public String getAccessTransformerClass() {
         return null;
+    }
+
+    private void log(final String prefix, final String message) {
+        this.log(prefix, message, null);
+    }
+
+    private void log(final String prefix, final String message, final Throwable e) {
+        FMLLog.log.info("[" + "INFO" + "] [" + prefix + "] " + "> " + message);
+
+        if (e != null) {
+            for (final String s : getException(e)) {
+                FMLLog.log.info("[" + "INFO" + "] [" + prefix + "] " + "> " + s);
+            }
+        }
+    }
+
+    private static List<String> getException(final Throwable e) {
+        List<String> exception = Lists.newArrayList(e.getClass().getSimpleName() + ": " + e.getMessage());
+
+        for (final StackTraceElement element : e.getStackTrace()) {
+            exception.add(element.toString());
+        }
+
+        return exception;
+    }
+
+    public static class Tuple<X, Y> {
+        private final X x;
+        private final Y y;
+
+        public final X getFirst() {
+            return x;
+        }
+
+        public final Y getSecond() {
+            return y;
+        }
+
+        public Tuple(X x, Y y) {
+            this.x = x;
+            this.y = y;
+        }
     }
 }
