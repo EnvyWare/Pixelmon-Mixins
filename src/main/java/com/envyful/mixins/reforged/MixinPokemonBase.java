@@ -16,7 +16,7 @@ public abstract class MixinPokemonBase implements ITranslatable {
 
     @Shadow public abstract EnumSpecies getSpecies();
 
-    private IEnumForm formCache = null;
+    private transient IEnumForm formCache = null;
 
     @Inject(method = "getFormEnum", at = @At("RETURN"), remap = false)
     public void onGetFormEnumRETURN(CallbackInfoReturnable<IEnumForm> cir) {

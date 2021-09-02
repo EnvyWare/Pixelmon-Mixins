@@ -24,7 +24,7 @@ public abstract class MixinEntity1Base extends EntityTameable {
 
     @Shadow public abstract Pokemon getPokemonData();
 
-    private EnumBossMode bossModeCache = null;
+    private transient EnumBossMode bossModeCache = null;
 
     public MixinEntity1Base(World worldIn) {
         super(worldIn);

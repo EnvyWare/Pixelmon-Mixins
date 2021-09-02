@@ -24,7 +24,7 @@ import java.util.Map;
 @Mixin(TileEntityVicinityObjective.class)
 public abstract class MixinTileEntityVicinityObjective implements IObjective {
 
-    private static final Map<Class<?>, String> CLASS_NAME_CACHE = Maps.newHashMap();
+    private static final transient Map<Class<?>, String> CLASS_NAME_CACHE = Maps.newHashMap();
 
     /**
      *

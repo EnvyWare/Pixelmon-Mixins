@@ -41,8 +41,8 @@ public abstract class MixinTileEntityBerryTree extends TileEntity implements ITi
 
     @Shadow public abstract void replant();
 
-    private BlockBerryTree cache = null;
-    private EnumBerry typeCache = null;
+    private transient BlockBerryTree cache = null;
+    private transient EnumBerry typeCache = null;
 
     /**
      *

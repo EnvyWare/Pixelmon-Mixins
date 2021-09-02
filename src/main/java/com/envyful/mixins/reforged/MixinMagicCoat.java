@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 @Mixin(MagicCoat.class)
 public abstract class MixinMagicCoat extends StatusBase {
 
-    private static final String[] BLOCKED = new String[] {
+    private static final transient String[] BLOCKED = new String[] {
             "Sketch",
             "Bestow", "Curse", "Guard Swap", "Heart Swap", "Lock-On", "Memento", "Mimic", "Power Swap", "Psych Up",
             "Psycho Shift", "Role Play", "Skill Swap", "Snatch", "Switcheroo", "Transform", "Trick", "Extreme Evoboost"

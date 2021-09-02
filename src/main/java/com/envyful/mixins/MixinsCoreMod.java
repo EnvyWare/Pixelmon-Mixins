@@ -117,16 +117,9 @@ public class MixinsCoreMod implements IFMLLoadingPlugin {
 
     public MixinsCoreMod() {
         addToCoremodList("com/pixelmonmod/pixelmon/api/pokemon/Pokemon.class", "mixins.pixelmon.json");
-        addToCoremodList("me/rojo8399/placeholderapi/impl/PlaceholderAPIPlugin.class", "mixins.placeholderapi.json");
-        addToCoremodList("io/github/theknightkarim/oremoney/OreMoney.class", "mixins.oremoney.json");
         addToCoremodList("uk/co/proxying/tabmanager/TabManager.class", "mixins.tabmanager.json");
-        addToCoremodList("me/ryanhamshire/griefprevention/GriefPrevention.class", "mixins.griefprevention.json");
         addToCoremodList("com/pixelextras/PixelExtras.class", "mixins.pixelextras.json");
-        addToCoremodList("de/waterdude/uishop/UIShop.class", "mixins.uishop.json");
-        addToCoremodList("de/waterdude/aquaapi/AquaAPI.class", "mixins.aquaapi.json");
-        addToCoremodList("de/waterdude/dailies/Dailies.class", "mixins.dailies.json");
-        addToCoremodList("io/github/nucleuspowered/nucleus/Nucleus.class", "mixins.nucleus.json");
-        addToCoremodList("com/karanumcoding/adamantineshieldreforged/AdamantineShieldReforged.class", "mixins.adamantine.json");
+        addToCoremodList("com/xpgaming/pixelhunt/PixelHuntForge.class", "mixins.pixelhunt.json");
 
         loadCoremodList();
     }

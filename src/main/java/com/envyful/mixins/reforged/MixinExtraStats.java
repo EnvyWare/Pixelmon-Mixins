@@ -13,7 +13,7 @@ import java.util.Map;
 @Mixin(ExtraStats.class)
 public class MixinExtraStats {
 
-    private static final Map<EnumSpecies, Constructor<ExtraStats>> STATS_CONSTRUCTORS = Maps.newHashMap();
+    private static final transient Map<EnumSpecies, Constructor<ExtraStats>> STATS_CONSTRUCTORS = Maps.newHashMap();
 
     static {
         getConstructor(EnumSpecies.Mew, MewStats.class);

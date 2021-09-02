@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Entity6Moves.class)
 public class MixinEntity6Moves {
 
-    private Boolean flyingCache = null;
+    private transient Boolean flyingCache = null;
 
     @Inject(method = "getIsFlying", at = @At("RETURN"), remap = false)
     public void onGetIsFlyingRETURN(CallbackInfoReturnable<Boolean> cir) {

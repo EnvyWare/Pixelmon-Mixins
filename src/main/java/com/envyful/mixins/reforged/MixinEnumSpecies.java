@@ -34,8 +34,8 @@ public class MixinEnumSpecies {
             "Blacephalon", "Poipole", "Naganadel", "Stakataka", "Kartana"
     );
 
-    private Boolean legendary = null;
-    private Boolean ultrabeast = null;
+    private transient Boolean legendary = null;
+    private transient Boolean ultrabeast = null;
 
     /**
      * @author

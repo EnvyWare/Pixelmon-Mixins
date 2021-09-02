@@ -16,7 +16,7 @@ import java.time.ZoneId;
 @Mixin(DateObjective.class)
 public abstract class MixinDateObjective implements IObjective {
 
-    private static ZoneId zone = ZoneId.systemDefault();
+    private static transient ZoneId zone = ZoneId.systemDefault();
 
     /**
      *

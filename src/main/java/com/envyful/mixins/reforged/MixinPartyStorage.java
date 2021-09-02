@@ -26,7 +26,7 @@ public abstract class MixinPartyStorage extends PokemonStorage {
         super(uuid);
     }
 
-    private List<Pokemon> partyAsList = new ArrayList<>();
+    private transient List<Pokemon> partyAsList = new ArrayList<>();
 
     @Inject(method = "getTeam", at = @At("HEAD"), cancellable = true, remap = false)
     public void onGetTeamHead(CallbackInfoReturnable<List<Pokemon>> callbackInfoReturnable) {
