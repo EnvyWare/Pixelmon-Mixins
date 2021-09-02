@@ -21,7 +21,6 @@
     "MixinPartyStorage",
     "MixinPoison",
     "MixinPokemon",
-    "MixinPokemonBase",
     "MixinRegenerator",
     "MixinStatusBase",
     "MixinTileEntityBerryTree",
