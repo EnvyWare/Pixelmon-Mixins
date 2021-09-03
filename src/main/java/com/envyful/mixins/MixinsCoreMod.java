@@ -120,6 +120,7 @@ public class MixinsCoreMod implements IFMLLoadingPlugin {
         addToCoremodList("uk/co/proxying/tabmanager/TabManager.class", "mixins.tabmanager.json");
         addToCoremodList("com/pixelextras/PixelExtras.class", "mixins.pixelextras.json");
         addToCoremodList("com/xpgaming/pixelhunt/PixelHuntForge.class", "mixins.pixelhunt.json");
+        addToCoremodList("com/mcsimonflash/sponge/activetime/ActiveTime.class", "mixins.activetime.json");
 
         loadCoremodList();
     }
