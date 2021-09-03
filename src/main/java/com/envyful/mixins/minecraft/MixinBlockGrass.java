@@ -48,8 +48,8 @@ public abstract class MixinBlockGrass extends Block implements IGrowable {
             }
             else
             {
-                if (this.lastGrowthTick != -1 && (this.lastGrowthTick - FMLCommonHandler.instance()
-                        .getMinecraftServerInstance().getTickCounter()) < 30) {
+                if (this.lastGrowthTick != -1 && (FMLCommonHandler.instance()
+                        .getMinecraftServerInstance().getTickCounter() - this.lastGrowthTick) < 30) {
                     return;
                 }
 
