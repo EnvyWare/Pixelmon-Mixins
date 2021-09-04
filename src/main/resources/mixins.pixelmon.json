@@ -6,6 +6,7 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "IShopKeeperPacket",
     "MixinCaptureBeastBall",
     "MixinDateObjective",
     "MixinEntity1Base",
@@ -23,6 +24,7 @@
     "MixinPokemon",
     "MixinPokemonBase",
     "MixinRegenerator",
+    "MixinShopKeeperPacketHandler",
     "MixinStatusBase",
     "MixinTileEntityBerryTree",
     "MixinTileEntityVicinityObjective"
