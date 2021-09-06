@@ -1,4 +1,4 @@
-# Pixelmon-Mixins
+# Pixelmon-Mixins [![Discord](https://img.shields.io/discord/831966641586831431)](https://discord.gg/7vqgtrjDGw)
 
 Active Patches:
 * Reduces grass block growth attempts (lots of calls to Random)
