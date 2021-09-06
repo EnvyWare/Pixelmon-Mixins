@@ -14,9 +14,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.chunk.Chunk;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -34,26 +36,47 @@ public abstract class MixinTileEntityVicinityObjective implements IObjective {
      */
     @Overwrite(remap = false)
     public boolean test(Stage stageIn, QuestData dataIn, QuestProgress progressIn, Objective objectiveIn, Object[] objectiveArgsIn, Object... argsIn) throws InvalidQuestArgsException {
+        if (stageIn == null || dataIn == null || progressIn == null || objectiveIn == null || objectiveArgsIn == null || argsIn == null) {
+            return false;
+        }
+
         Object arg = objectiveArgsIn[0];
         int distance = (int) objectiveArgsIn[1];
         WorldServer world = dataIn.getPlayer().getServerWorld();
         String type = (String) arg;
 
-        Iterator var11 = this.getTileEntitiesWithinAABB(world,
+        if (arg == null || world == null || type == null) {
+            return false;
+        }
+
+        Iterator<TileEntity> var11 = this.getTileEntitiesWithinAABB(world,
                 dataIn.getPlayer().getEntityBoundingBox().expand(distance, distance, distance)).iterator();
-        TileEntity te;
-        do {
-            if (!var11.hasNext()) {
-                return false;
+
+        if (var11 == null) {
+            return false;
+        }
+
+        while (var11.hasNext()) {
+            TileEntity te = var11.next();
+
+            if (te == null) {
+                continue;
             }
 
-            te = (TileEntity)var11.next();
-        } while(!(dataIn.getPlayer().getDistance((double)te.getPos().getX(), (double)te.getPos().getY(), (double)te.getPos().getZ()) <= (double)distance) || !te.getClass().getSimpleName().equalsIgnoreCase(type));
-
+            if ((dataIn.getPlayer().getDistance(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ()) <= distance)
+                    || !CLASS_NAME_CACHE.computeIfAbsent(te.getClass(), ___ -> te.getClass().getSimpleName())
+                    .equalsIgnoreCase(type)) {
+                return true;
+            }
+        }
         return true;
     }
 
     public List<TileEntity> getTileEntitiesWithinAABB(World world, AxisAlignedBB aabb) {
+        if (world == null || aabb == null) {
+            return Collections.emptyList();
+        }
+
         int j2 = MathHelper.floor((aabb.minX - World.MAX_ENTITY_RADIUS) / 16.0D);
         int k2 = MathHelper.ceil((aabb.maxX + World.MAX_ENTITY_RADIUS) / 16.0D);
         int l2 = MathHelper.floor((aabb.minZ - World.MAX_ENTITY_RADIUS) / 16.0D);
@@ -64,9 +87,11 @@ public abstract class MixinTileEntityVicinityObjective implements IObjective {
         {
             for (int k3 = l2; k3 < i3; ++k3)
             {
-                if (world.getChunkProvider().getLoadedChunk(j3, k3) != null)
+                Chunk loadedChunk = world.getChunkProvider().getLoadedChunk(j3, k3);
+
+                if (loadedChunk != null && loadedChunk.getTileEntityMap() != null)
                 {
-                    list.addAll(world.getChunk(j3, k3).getTileEntityMap().values());
+                    list.addAll(loadedChunk.getTileEntityMap().values());
                 }
             }
         }
