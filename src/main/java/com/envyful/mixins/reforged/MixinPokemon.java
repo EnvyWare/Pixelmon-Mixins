@@ -1,29 +1,24 @@
 package com.envyful.mixins.reforged;
 
-import com.pixelmonmod.pixelmon.RandomHelper;
-import com.pixelmonmod.pixelmon.api.pokemon.EnumInitializeCategory;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.pokemon.PokemonBase;
-import com.pixelmonmod.pixelmon.api.storage.PokemonStorage;
 import com.pixelmonmod.pixelmon.comm.EnumUpdateType;
-import com.pixelmonmod.pixelmon.config.PixelmonConfig;
-import com.pixelmonmod.pixelmon.entities.pixelmon.abilities.AbilityBase;
-import com.pixelmonmod.pixelmon.entities.pixelmon.abilities.ComingSoon;
-import com.pixelmonmod.pixelmon.entities.pixelmon.stats.*;
-import com.pixelmonmod.pixelmon.enums.*;
-import com.pixelmonmod.pixelmon.enums.forms.IEnumForm;
-import com.pixelmonmod.pixelmon.util.helpers.CollectionHelper;
+import io.netty.buffer.ByteBuf;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
 
 @Mixin(Pokemon.class)
 public abstract class MixinPokemon extends PokemonBase {
+
+    @Shadow public abstract void setForm(int form);
+
     /**
      * @author
      */
@@ -47,5 +42,10 @@ public abstract class MixinPokemon extends PokemonBase {
         } else {
             return this.species.isUltraBeast();
         }
+    }
+
+    @Inject(method = "readFromByteBuffer", at = @At("RETURN"), remap = false)
+    public void onReadFromByteBuffer(ByteBuf buf, EnumUpdateType[] data, CallbackInfoReturnable<Pokemon> cir) {
+        this.setForm(this.form);
     }
 }
