@@ -122,6 +122,7 @@ public class MixinsCoreMod implements IFMLLoadingPlugin {
         addToCoremodList("ca/landonjw/gooeylibs2/GooeyLibs.class", "mixins.gooeylibs.json");
         addToCoremodList("com/xpgaming/pixelhunt/PixelHuntForge.class", "mixins.pixelhunt.json");
         addToCoremodList("com/mcsimonflash/sponge/activetime/ActiveTime.class", "mixins.activetime.json");
+        addToCoremodList("fr/pokepixel/pokeloots/PokeLootS.class", "mixins.pokeloot.json");
 
         loadCoremodList();
     }
