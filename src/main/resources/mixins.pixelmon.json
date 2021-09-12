@@ -27,6 +27,7 @@
     "MixinShopKeeperPacketHandler",
     "MixinStatusBase",
     "MixinTileEntityBerryTree",
+    "MixinTileEntityPokeChest",
     "MixinTileEntityVicinityObjective"
   ],
   "client": []
