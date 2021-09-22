@@ -65,10 +65,8 @@ public class MixinsCoreMod implements IFMLLoadingPlugin {
     private void initializeMixins() {
         loadedCoremods.add(new Tuple<>("internal", "mixins.minecraft.json"));
 
-        if (this.isSponge()) {
-            log("Mixins", "Loading Sponge mixins");
-            Mixins.addConfiguration("mixins.sponge.json");
-        }
+        log("Mixins", "Loading Sponge mixins");
+        Mixins.addConfiguration("mixins.sponge.json");
 
         try {
             MixinBootstrap.init();
@@ -82,16 +80,6 @@ public class MixinsCoreMod implements IFMLLoadingPlugin {
             }
         } catch (final Throwable t) {
             log("Mixins", "Caught Exception trying to preload mod configurations", t);
-        }
-    }
-
-    private boolean isSponge() {
-        try {
-            Class.forName("org.spongepowered.mod.SpongeMod");
-            return true;
-        } catch (ClassNotFoundException e) {
-            System.out.println("Could not find org.spongepowered.mod.SpongeMod");
-            return false;
         }
     }
 
