@@ -28,17 +28,27 @@ public abstract class MixinPartyStorage extends PokemonStorage {
 
     private transient List<Pokemon> partyAsList = new ArrayList<>();
 
-    @Inject(method = "getTeam", at = @At("HEAD"), cancellable = true, remap = false)
-    public void onGetTeamHead(CallbackInfoReturnable<List<Pokemon>> callbackInfoReturnable) {
-        if (!this.getShouldSave()) {
-            callbackInfoReturnable.setReturnValue(this.partyAsList);
-            callbackInfoReturnable.cancel();
-        }
-    }
+    /**
+     * @author
+     */
+    @Overwrite(remap = false)
+    public List<Pokemon> getTeam() {
+        if (this.partyAsList == null || this.getShouldSave()) {
+            List<Pokemon> team = new ArrayList();
+            Pokemon[] var2 = this.party;
+            int var3 = var2.length;
 
-    @Inject(method = "getTeam", at = @At("RETURN"), remap = false)
-    public void onGetTeamReturn(CallbackInfoReturnable<List<Pokemon>> callbackInfoReturnable) {
-        this.partyAsList = callbackInfoReturnable.getReturnValue();
+            for (int var4 = 0; var4 < var3; ++var4) {
+                Pokemon pokemon = var2[var4];
+                if (pokemon != null && !pokemon.isEgg()) {
+                    team.add(pokemon);
+                }
+            }
+
+            this.partyAsList = team;
+        }
+
+        return this.partyAsList;
     }
 
     @Inject(method = "readFromNBT", at = @At("HEAD"), remap = false)
