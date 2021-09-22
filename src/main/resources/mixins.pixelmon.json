@@ -10,6 +10,7 @@
     "MixinCaptureBeastBall",
     "MixinDateObjective",
     "MixinEntity1Base",
+    "MixinEntity2Client",
     "MixinEntity4Interactions",
     "MixinEntity6Moves",
     "MixinEntityPixelmon",
