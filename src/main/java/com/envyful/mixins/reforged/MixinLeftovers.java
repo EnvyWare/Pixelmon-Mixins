@@ -27,7 +27,7 @@ public abstract class MixinLeftovers extends ItemHeld {
             return;
         }
 
-        if (!pw.hasFullHealth() && !pw.hasStatus(new StatusType[]{StatusType.HealBlock})) {
+        if (!pw.hasFullHealth() && !pw.hasStatus(StatusType.HealBlock)) {
             int par1 = (int)((float)pw.getMaxHealth() * 0.0625F);
             pw.healEntityBy(par1);
             if (pw.bc != null) {
