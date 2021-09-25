@@ -30,12 +30,6 @@ public class MixinSpawnInfo {
      */
     @Overwrite(remap = false)
     public float getAdjustedRarity(AbstractSpawner spawner, SpawnLocation spawnLocation) {
-        if (this.rarityCache != null && this.lastUpdate != null) {
-            if ((System.currentTimeMillis() - this.lastUpdate) <= ONE_MINUTE) {
-                return this.rarityCache;
-            }
-        }
-
         float rarity = this.rarity;
         Iterator var4;
         RarityMultiplier rarityMultiplier;
@@ -45,16 +39,19 @@ public class MixinSpawnInfo {
             }
         }
 
-        for(var4 = spawner.rarityMultipliers.iterator(); var4.hasNext(); rarity = rarityMultiplier.apply((SpawnInfo) ((Object) this), spawnLocation, rarity)) {
-            rarityMultiplier = (RarityMultiplier)var4.next();
+        if (spawner != null && spawner.rarityMultipliers != null && !spawner.rarityMultipliers.isEmpty()) {
+            for (var4 = spawner.rarityMultipliers.iterator(); var4.hasNext(); rarity = rarityMultiplier.apply((SpawnInfo) ((Object) this), spawnLocation, rarity)) {
+                rarityMultiplier = (RarityMultiplier) var4.next();
+            }
         }
 
-        for(var4 = BetterSpawnerConfig.INSTANCE.globalRarityMultipliers.iterator(); var4.hasNext(); rarity = rarityMultiplier.apply((SpawnInfo) ((Object) this), spawnLocation, rarity)) {
-            rarityMultiplier = (RarityMultiplier)var4.next();
+        if (BetterSpawnerConfig.INSTANCE.globalRarityMultipliers != null && !BetterSpawnerConfig.INSTANCE.globalRarityMultipliers.isEmpty()) {
+            for (var4 = BetterSpawnerConfig.INSTANCE.globalRarityMultipliers.iterator(); var4.hasNext(); rarity = rarityMultiplier.apply((SpawnInfo) ((Object) this), spawnLocation, rarity)) {
+                rarityMultiplier = (RarityMultiplier) var4.next();
+            }
         }
 
-        this.rarityCache = rarity;
-        this.lastUpdate = System.currentTimeMillis();
+
         return rarity;
     }
 }
