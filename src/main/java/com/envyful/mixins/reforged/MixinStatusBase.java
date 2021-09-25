@@ -13,7 +13,7 @@ import java.util.Map;
 @Mixin(StatusBase.class)
 public class MixinStatusBase {
 
-    private static final Map<Class<? extends StatusBase>, Constructor<? extends StatusBase>> CONSTRUCTORS_CACHE = Maps.newHashMap();
+    private static final transient Map<Class<? extends StatusBase>, Constructor<? extends StatusBase>> CONSTRUCTORS_CACHE = Maps.newHashMap();
 
     /**
      *

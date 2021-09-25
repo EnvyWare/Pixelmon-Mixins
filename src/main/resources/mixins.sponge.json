@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.5.7",
+  "package": "com.envyful.mixins.sponge",
+  "refmap": "mixins.sponge.refmap.json",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinTrackingUtil"
+  ],
+  "client": []
+}
