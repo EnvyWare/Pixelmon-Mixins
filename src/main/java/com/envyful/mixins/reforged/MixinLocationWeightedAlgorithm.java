@@ -80,7 +80,6 @@ public abstract class MixinLocationWeightedAlgorithm implements ISelectionAlgori
             }
         }
 
-        // Pretty sure this is impossible.
         Pixelmon.LOGGER.log(Level.WARN, "Unable to choose a SpawnInfo based on rarities. This shouldn't be possible.");
         return null;
     }

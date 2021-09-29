@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 @Mixin(AbstractSpawner.class)
@@ -26,24 +27,30 @@ public class MixinAbstractSpawner {
      */
     @Overwrite(remap = false)
     public ArrayList<SpawnInfo> getSuitableSpawns(SpawnLocation spawnLocation) {
-        if (cacheSets == null) {
-            this.cacheSets = Maps.newHashMap();
-        }
-        List<SpawnInfo> spawnInfos = this.cacheSets.get(spawnLocation.biome);
+        ArrayList<SpawnInfo> suitableSpawns = new ArrayList();
+        Iterator var3;
+        if (this.cacheSets != null) {
+            if (!this.cacheSets.containsKey(spawnLocation.biome)) {
+                return new ArrayList();
+            }
 
-        if (spawnInfos != null) {
-            return (ArrayList<SpawnInfo>) spawnInfos;
-        }
+            var3 = ((List)this.cacheSets.get(spawnLocation.biome)).iterator();
 
-        ArrayList<SpawnInfo> suitableSpawns = new ArrayList<>();
+            while(var3.hasNext()) {
+                SpawnInfo spawnInfo = (SpawnInfo)var3.next();
+                if (spawnInfo.fits((AbstractSpawner) ((Object) this), spawnLocation)) {
+                    suitableSpawns.add(spawnInfo);
+                }
+            }
+        } else {
+            var3 = this.spawnSets.iterator();
 
-        for (SpawnInfo spawnInfo : cacheSets.get(spawnLocation.biome)) {
-            if (spawnInfo.fits((AbstractSpawner) ((Object) this), spawnLocation)) {
-                suitableSpawns.add(spawnInfo);
+            while(var3.hasNext()) {
+                SpawnSet set = (SpawnSet)var3.next();
+                suitableSpawns.addAll(set.suitableSpawnsFor((AbstractSpawner) ((Object) this), spawnLocation));
             }
         }
 
-        this.cacheSets.put(spawnLocation.biome, suitableSpawns);
         return suitableSpawns;
     }
 }

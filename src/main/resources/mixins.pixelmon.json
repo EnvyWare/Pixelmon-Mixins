@@ -7,7 +7,6 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "IShopKeeperPacket",
-    "MixinAbstractSpawner",
     "MixinCaptureBeastBall",
     "MixinDateObjective",
     "MixinEntity1Base",
@@ -20,7 +19,6 @@
     "MixinExtraStats",
     "MixinLeftovers",
     "MixinLegendaryCaptureTriggerInstance",
-    "MixinLocationWeightedAlgorithm",
     "MixinMagicCoat",
     "MixinPartyStorage",
     "MixinPoison",
@@ -28,10 +26,10 @@
     "MixinPokemonBase",
     "MixinRegenerator",
     "MixinShopKeeperPacketHandler",
-    "MixinSpawnInfo",
     "MixinStatusBase",
     "MixinTileEntityBerryTree",
-    "MixinTileEntityPokeChest"
+    "MixinTileEntityPokeChest",
+    "MixinLocationType"
   ],
   "client": []
 }
