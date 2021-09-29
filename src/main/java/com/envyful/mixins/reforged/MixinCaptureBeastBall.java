@@ -1,6 +1,6 @@
 package com.envyful.mixins.reforged;
 
-import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
+import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.entities.pokeballs.EnumPokeBallMode;
 import com.pixelmonmod.pixelmon.entities.pokeballs.captures.CaptureBase;
 import com.pixelmonmod.pixelmon.entities.pokeballs.captures.CaptureBeastBall;
@@ -21,7 +21,7 @@ public abstract class MixinCaptureBeastBall extends CaptureBase {
      * @author
      */
     @Overwrite(remap = false)
-    public double getBallBonus(EnumPokeballs type, EntityPlayer thrower, EntityPixelmon p2, EnumPokeBallMode mode) {
+    public double getBallBonus(EnumPokeballs type, EntityPlayer thrower, Pokemon p2, EnumPokeBallMode mode) {
         if (p2.getSpecies().isUltraBeast()) {
             return 5.0D;
         } else {
