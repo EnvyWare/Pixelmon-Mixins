@@ -38,16 +38,18 @@ public abstract class MixinEntity1Base extends EntityTameable {
 
     @Shadow @Final private static DataParameter<Byte> dwGrowth;
 
+    @Shadow public abstract EnumBossMode getBossMode();
+
     @Inject(method = "setPokemon", at = @At("RETURN"), remap = false)
     public void onSetPokemon(Pokemon pokemon, CallbackInfo callbackInfo) {
-        if (pokemon.getGrowth().scaleOrdinal > 5) {
+        if (pokemon.getGrowth().scaleOrdinal > 5 || (this.getBossMode() != null && this.getBossMode().scaleFactor > 1.0F)) {
             this.navigator = new PathNavigateGroundLarge(this, this.world);
         }
     }
 
     @Inject(method = "func_70037_a(Lnet/minecraft/nbt/NBTTagCompound;)V", at = @At("RETURN"), remap = false)
     public void onReadEntityFromNBT(NBTTagCompound nbt, CallbackInfo callbackInfo) {
-        if (this.getPokemonData().getGrowth().scaleOrdinal > 5) {
+        if (this.getPokemonData().getGrowth().scaleOrdinal > 5 || (this.getBossMode() != null && this.getBossMode().scaleFactor > 1.0F)) {
             this.navigator = new PathNavigateGroundLarge(this, this.world);
         }
     }
@@ -56,6 +58,11 @@ public abstract class MixinEntity1Base extends EntityTameable {
     public void onNotifyDataManagerChange(DataParameter<?> key, CallbackInfo callbackInfo) {
         if ((key.getId() == dwSpecies.getId() || key.getId() == dwGrowth.getId()) && this.getPokemonData().getGrowth().scaleOrdinal > 5) {
             this.navigator = new PathNavigateGroundLarge(this, this.world);
+        }
+
+        if (key.getId() == ((IEntityPixelmon) this).getDwBossMode().getId() &&
+                this.getBossMode() != null && this.getBossMode().scaleFactor > 1.0F) {
+
         }
     }
 

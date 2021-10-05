@@ -21,7 +21,7 @@ public abstract class MixinEntity4Interactions extends Entity3HasStats {
 
     @Inject(method = "resetAI", at = @At("RETURN"), remap = false)
     public void onResetAI(CallbackInfo ci) {
-        if (this.getPokemonData().getGrowth().scaleOrdinal > 5) {
+        if (this.getPokemonData().getGrowth().scaleOrdinal > 5 || (this.getBossMode() != null && this.getBossMode().scaleFactor > 1.0F)) {
             this.navigator = new PathNavigateGroundLarge(this, this.world);
         }
     }
