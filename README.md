@@ -19,4 +19,3 @@ Active Patches:
 * Fixes regenerator waiting glitch
 * Adds reflection cache to StatusBase
 * Optimizes BerryTrees
-* Optimizes the Vicinity quests objective
