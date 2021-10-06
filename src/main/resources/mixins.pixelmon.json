@@ -30,7 +30,8 @@
     "MixinSpawnerCoodinator",
     "MixinStatusBase",
     "MixinTileEntityBerryTree",
-    "MixinTileEntityPokeChest"
+    "MixinTileEntityPokeChest",
+    "MixinUltraSpaceEventHandler"
   ],
   "client": []
 }
