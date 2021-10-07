@@ -60,7 +60,7 @@ public abstract class MixinEntity1Base extends EntityTameable {
             this.navigator = new PathNavigateGroundLarge(this, this.world);
         }
 
-        if (key.getId() == ((IEntityPixelmon) this).getDwBossMode().getId() &&
+        if (this instanceof IEntityPixelmon && key.getId() == ((IEntityPixelmon) this).getDwBossMode().getId() &&
                 this.getBossMode() != null && this.getBossMode().scaleFactor > 1.0F) {
 
         }
