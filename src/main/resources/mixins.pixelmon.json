@@ -26,7 +26,6 @@
     "MixinPokemon",
     "MixinPokemonBase",
     "MixinRegenerator",
-    "MixinShopKeeperPacketHandler",
     "MixinSpawnerCoodinator",
     "MixinStatusBase",
     "MixinTileEntityBerryTree",
