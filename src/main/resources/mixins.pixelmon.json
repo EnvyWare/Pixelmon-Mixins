@@ -15,7 +15,6 @@
     "MixinEntity4Interactions",
     "MixinEntity6Moves",
     "MixinEntityPixelmon",
-    "MixinEntityStatue",
     "MixinEnumSpecies",
     "MixinExtraStats",
     "MixinLeftovers",
