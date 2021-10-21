@@ -13,6 +13,7 @@
     "MixinEntity4Interactions",
     "MixinEntity6Moves",
     "MixinLeftovers",
+    "MixinNPCTrainer",
     "MixinPartyStorage",
     "MixinPoison",
     "MixinPokemon",
