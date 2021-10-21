@@ -8,28 +8,17 @@
   "mixins": [
     "IEntityPixelmon",
     "IShopKeeperPacket",
-    "MixinCaptureBeastBall",
-    "MixinDateObjective",
     "MixinEntity1Base",
     "MixinEntity2Client",
     "MixinEntity4Interactions",
     "MixinEntity6Moves",
-    "MixinEntityPixelmon",
-    "MixinEnumSpecies",
-    "MixinExtraStats",
     "MixinLeftovers",
-    "MixinLegendaryCaptureTriggerInstance",
-    "MixinMagicCoat",
     "MixinPartyStorage",
     "MixinPoison",
     "MixinPokemon",
     "MixinPokemonBase",
     "MixinRegenerator",
-    "MixinSpawnerCoodinator",
-    "MixinStatusBase",
-    "MixinTileEntityBerryTree",
-    "MixinTileEntityPokeChest",
-    "MixinUltraSpaceEventHandler"
+    "MixinStatusBase"
   ],
   "client": []
 }
