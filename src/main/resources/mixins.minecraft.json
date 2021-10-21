@@ -5,8 +5,6 @@
   "refmap": "mixins.minecraft.refmap.json",
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [
-    "MixinBlockGrass"
-  ],
+  "mixins": [],
   "client": []
 }
