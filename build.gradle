@@ -120,7 +120,7 @@ reobf {
 
 task versionedRelease(type: Copy) {
     group "build"
-    from('./build/libs/' + rootProject.name + '-Forge.jar')
+    from('./build/libs/PixelmonFixes.jar')
     into('../release/')
     include '*.jar'
     rename { String filename ->
