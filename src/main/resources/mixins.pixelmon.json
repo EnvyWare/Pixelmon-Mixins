@@ -8,6 +8,7 @@
   "mixins": [
     "IEntityPixelmon",
     "IShopKeeperPacket",
+    "MixinAISwimming",
     "MixinEntity1Base",
     "MixinEntity2Client",
     "MixinEntity4Interactions",
