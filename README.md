@@ -10,3 +10,7 @@ Active Patches:
 * Fixes Poison waiting glitch
 * Fixes regenerator waiting glitch
 * Adds reflection cache to StatusBase
+* Removes travel call in Swimming AI
+* Removes travel call in Flying AI
+* Removes travel call in Persistent Flying AI
+* Removes unnecessary maths in Persistent Flying AI
