@@ -2,6 +2,7 @@ package com.envyful.mixins.reforged;
 
 import com.pixelmonmod.pixelmon.AI.AISwimming;
 import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
+import com.pixelmonmod.pixelmon.enums.EnumSpecies;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -9,6 +10,9 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+
+import java.util.Objects;
+import java.util.Random;
 
 @Mixin(AISwimming.class)
 public abstract class MixinAISwimming extends EntityAIBase {
@@ -26,6 +30,31 @@ public abstract class MixinAISwimming extends EntityAIBase {
     @Shadow(remap = false) public abstract void pickDirection(boolean useLastChangeDirection);
 
     @Shadow(remap = false) public abstract void pickSpeed();
+
+    @Shadow private float swimSpeed;
+
+    @Shadow private float decayRate;
+
+    @Shadow private int depthRangeEnd;
+
+    @Shadow private Random rand;
+
+    public MixinAISwimming(EntityPixelmon entity) {
+        if (entity.getSwimmingParameters() != null) {
+            this.swimSpeed = entity.getSwimmingParameters().swimSpeed;
+            this.decayRate = entity.getSwimmingParameters().decayRate;
+            this.depthRangeStart = entity.getSwimmingParameters().depthRangeStart;
+            this.depthRangeEnd = entity.getSwimmingParameters().depthRangeEnd;
+            this.ticksToRefresh = 0;
+        }
+
+        if (Objects.equals(entity.getSpecies(), EnumSpecies.Magikarp)) {
+            this.swimSpeed = 0.7f;
+        }
+
+        this.pixelmon = entity;
+        this.rand = entity.getRNG();
+    }
 
     /**
      * @author
