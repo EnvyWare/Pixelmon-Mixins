@@ -29,7 +29,7 @@ apply plugin: 'org.spongepowered.mixin'
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
-version = '0.2.7'
+version = '0.2.8'
 
 repositories {
     maven { url 'https://jitpack.io' }
