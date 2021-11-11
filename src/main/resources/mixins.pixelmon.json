@@ -11,6 +11,7 @@
     "MixinAIFlying",
     "MixinAIFlyingPersistent",
     "MixinAISwimming",
+    "MixinAttack",
     "MixinEntity1Base",
     "MixinEntity2Client",
     "MixinEntity4Interactions",
