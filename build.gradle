@@ -62,6 +62,7 @@ dependencies {
     implementation 'org.spongepowered:mixin:0.8.1-SNAPSHOT'
     implementation fg.deobf('com.pixelmonmod.pixelmon:Pixelmon-1.12.2-8.3.1-server:0.0.1')
     implementation fg.deobf('com.pixelextras.idc:PixelExtras-1.12.2-2.5.14-universal:0.0.1')
+    implementation fg.deobf('com.bop.idc:BiomesOPlenty-1.12.2-7.0.1.2444-universal:0.0.1')
 
     annotationProcessor 'org.spongepowered:mixin:0.8.3-SNAPSHOT:processor'
 }
