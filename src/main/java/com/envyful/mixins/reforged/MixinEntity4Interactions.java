@@ -131,7 +131,7 @@ public abstract class MixinEntity4Interactions extends Entity3HasStats {
                 entityliving.getMoveHelper().read(this.getMoveHelper());
             }
 
-            /*this.moveHelper.onUpdateMoveHelper();*/
+            this.moveHelper.onUpdateMoveHelper();
             if (!this.isFlying()) {
                 this.getLookHelper().onUpdateLook();
                 this.jumpHelper.doJump();

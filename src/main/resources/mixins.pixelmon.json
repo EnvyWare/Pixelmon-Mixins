@@ -8,10 +8,6 @@
   "mixins": [
     "IEntityPixelmon",
     "IShopKeeperPacket",
-    "MixinAIFlying",
-    "MixinAIFlyingPersistent",
-    "MixinAISwimming",
-    "MixinAttack",
     "MixinEntity1Base",
     "MixinEntity2Client",
     "MixinEntity4Interactions",
@@ -20,9 +16,6 @@
     "MixinNPCTrainer",
     "MixinPartyStorage",
     "MixinPoison",
-    "MixinPokemon",
-    "MixinPokemonBase",
-    "MixinRegenerator",
     "MixinStatusBase"
   ],
   "client": []
