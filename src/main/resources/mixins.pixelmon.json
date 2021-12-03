@@ -6,7 +6,7 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "IEntityPixelmon",
+    "IEntity1Base",
     "IShopKeeperPacket",
     "MixinEntity1Base",
     "MixinEntity2Client",
