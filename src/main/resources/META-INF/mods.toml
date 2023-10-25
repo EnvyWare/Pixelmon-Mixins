@@ -5,7 +5,7 @@ issueTrackerURL="https://github.com/EnvyWare/PixelmonFixes/issues/"
 
 [[mods]]
 modId="pixelmonfixes"
-version="1.0.0"
+version="1.0.1"
 displayName="Fixes the Bugs"
 displayURL="https://github.com/EnvyWare/PixelmonFixes"
 credits="Envyful"
