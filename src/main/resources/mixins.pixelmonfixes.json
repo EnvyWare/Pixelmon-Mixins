@@ -6,8 +6,10 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_11",
   "mixins": [
+    "MixinBattleStats",
     "MixinMoveset",
-    "MixinPixelmonEventHandler"
+    "MixinPixelmonEventHandler",
+    "MixinTrainerParticipant"
   ],
   "client": []
 }
