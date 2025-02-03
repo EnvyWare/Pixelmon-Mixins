@@ -11,7 +11,8 @@
     "MixinPixelmonEventHandler",
     "MixinPlayerPartyStorage",
     "MixinSelectionAlgorithm",
-    "MixinTrainerParticipant"
+    "MixinTrainerParticipant",
+    "MixinWorldHelper"
   ],
   "client": []
 }
