@@ -48,7 +48,7 @@ minecraft {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.39'
-    implementation 'pixelmon:Pixelmon-1.16.5-9.1.11-server:9.1.11'
+    implementation 'pixelmon:Pixelmon-1.16.5-9.1.13-server:9.1.13'
 
     implementation 'org.spongepowered:mixin:0.8.3-SNAPSHOT'
     implementation 'org.spongepowered:mixin:0.8.3-SNAPSHOT:processor'
