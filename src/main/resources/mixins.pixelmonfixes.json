@@ -9,6 +9,7 @@
     "MixinBattleStats",
     "MixinMoveset",
     "MixinPixelmonEventHandler",
+    "MixinPlayerPartyStorage",
     "MixinTrainerParticipant"
   ],
   "client": []
