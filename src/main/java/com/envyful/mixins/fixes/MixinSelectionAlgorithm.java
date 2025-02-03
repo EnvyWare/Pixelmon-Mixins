@@ -35,7 +35,7 @@ public abstract class MixinSelectionAlgorithm {
             } else if (spawnInfos.size() == 1) {
                 return spawnInfos.get(0);
             } else {
-                Object2FloatMap<SpawnInfo> finalRarities = new Object2FloatOpenHashMap<>();
+                Object2FloatMap<SpawnInfo> finalRarities = new Object2FloatOpenHashMap<>(spawnInfos.size());
                 float raritySum = 0.0F;
 
                 for(SpawnInfo spawnInfo : spawnInfos) {
