@@ -18,16 +18,17 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 @Mixin(value = SelectionAlgorithm.class, remap = false)
-public abstract class MixinSelectionAlgorithm {
+public interface MixinSelectionAlgorithm {
 
-    @Shadow @Nullable public abstract SpawnInfo chooseViaPercentage(AbstractSpawner spawner, List<SpawnInfo> spawnInfos);
+    @Shadow @Nullable
+    SpawnInfo chooseViaPercentage(AbstractSpawner spawner, List<SpawnInfo> spawnInfos);
 
     /**
      * @author Daniel
      * @reason Use Object2FloatMap to reduce boxing and unboxing
      */
     @Overwrite
-    public SpawnInfo choose(AbstractSpawner spawner, SpawnLocation spawnLocation, List<SpawnInfo> spawnInfos) {
+    default SpawnInfo choose(AbstractSpawner spawner, SpawnLocation spawnLocation, List<SpawnInfo> spawnInfos) {
         if (!spawnInfos.isEmpty() && (spawnInfos.size() != 1 || !((spawnInfos.get(0)).rarity <= 0.0F))) {
             SpawnInfo percentSelection = this.chooseViaPercentage(spawner, spawnInfos);
             if (percentSelection != null) {
